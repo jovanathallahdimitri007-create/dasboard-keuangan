@@ -7,7 +7,7 @@ Aplikasi manajemen keuangan online terpadu untuk sekolah, koordinator kelas (**K
 - 📦 **GitHub Repository:** [https://github.com/jovanathallahdimitri007-create/dasboard-keuangan](https://github.com/jovanathallahdimitri007-create/dasboard-keuangan)
 
 ---email author jovan.athallah@mail.sman2sby.com,indri@mail.sman2sby.com,mustakim@mail.sman2sby.com
-
+nis/nip jovan 0113867582,
 ## 🌟 Fitur Utama Sistem Keuangan Sekolah
 
 ### 1. 🏫 Multi-Kelas & Multi-Tahun Ajaran
