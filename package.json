@@ -1,0 +1,20 @@
+{
+  "name": "dasboard-keuangan-sekolah",
+  "version": "2.0.0",
+  "description": "Sistem Keuangan Kelas & Korlas Multi-Kelas",
+  "scripts": {
+    "dev": "streamlit run app.py",
+    "start": "streamlit run app.py",
+    "serve:web": "python3 -m http.server 8000",
+    "test": "python3 tests/test_school_finance_engine.py && node tests/test_financial_engine.js"
+  },
+  "keywords": [
+    "fintech",
+    "school-finance",
+    "korlas",
+    "streamlit",
+    "supabase"
+  ],
+  "author": "Jovan Athallah",
+  "license": "MIT"
+}
