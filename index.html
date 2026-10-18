@@ -1,358 +1,1527 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Keuangan Modern</title>
+  <title>Dashboard Keuangan Modern - Fintech Edition</title>
+  <meta name="description" content="Aplikasi Dashboard Finansial Modern: Anggaran Bulanan, Net Worth Tracker, Multi-Account, Transaksi Berulang, dan Analisis Keuangan">
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #2d6a4f;
-      --primary-light: #40916c;
-      --primary-dark: #1b4332;
-      --primary-accent: #52b788;
-      --primary-mint: #d8f3dc;
-      --bg-dark: #0f172a;
-      --bg-card: #1e293b;
-      --border-color: #334155;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --header-height: 64px;
-    }
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      overflow: hidden;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Top Navigation Header */
-    header.top-navbar {
-      height: var(--header-height);
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.25rem;
-      z-index: 100;
-      flex-shrink: 0;
-    }
-
-    .brand-section {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .brand-icon {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, #40916c, #1b4332);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      box-shadow: 0 4px 12px rgba(45, 106, 79, 0.35);
-      border: 1px solid rgba(82, 183, 136, 0.4);
-    }
-
-    .brand-text h1 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: #ffffff;
-      line-height: 1.2;
-    }
-
-    .brand-text span {
-      font-size: 0.75rem;
-      color: var(--primary-accent);
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    /* Navigation Tabs */
-    nav.tabs-nav {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      background: rgba(30, 41, 59, 0.8);
-      padding: 0.3rem 0.4rem;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .tab-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 0.9rem;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      font-family: inherit;
-      font-size: 0.85rem;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .tab-btn:hover {
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg, #2d6a4f, #40916c);
-      color: #ffffff;
-      box-shadow: 0 3px 10px rgba(45, 106, 79, 0.4);
-    }
-
-    .tab-btn svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    /* Action Controls */
-    .actions-section {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .action-btn {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-    }
-
-    .action-btn:hover {
-      color: #ffffff;
-      background: rgba(51, 65, 85, 0.9);
-      border-color: #475569;
-    }
-
-    .action-btn svg {
-      width: 17px;
-      height: 17px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    /* Content Area & iframe */
-    main#content-container {
-      flex: 1;
-      width: 100%;
-      height: calc(100vh - var(--header-height));
-      position: relative;
-      background: #ffffff;
-    }
-
-    iframe#sheet-frame {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-      background: #ffffff;
-    }
-
-    /* Loading overlay */
-    .loader-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(15, 23, 42, 0.7);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      z-index: 50;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-
-    .loader-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .spinner {
-      width: 38px;
-      height: 38px;
-      border: 3px solid rgba(82, 183, 136, 0.2);
-      border-top-color: var(--primary-accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 900px) {
-      header.top-navbar {
-        height: auto;
-        padding: 0.6rem 0.8rem;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-      nav.tabs-nav {
-        order: 3;
-        width: 100%;
-        overflow-x: auto;
-        justify-content: flex-start;
-      }
-      main#content-container {
-        height: calc(100vh - 110px);
-      }
-    }
-  </style>
+  <!-- Core App Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <header class="top-navbar">
-    <div class="brand-section">
-      <div class="brand-icon">📊</div>
-      <div class="brand-text">
-        <h1>Dashboard Keuangan</h1>
-        <span>Sistem Finansial & Pembukuan</span>
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <a href="#" class="brand-badge">
+          <div class="brand-logo">💎</div>
+          <div class="brand-info">
+            <h2>FinansialKu</h2>
+            <p>Fintech Edition</p>
+          </div>
+        </a>
       </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Menu Utama</div>
+        <button class="nav-item active" data-view="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="9" rx="1"></rect><rect x="14" y="3" width="7" height="5" rx="1"></rect><rect x="14" y="12" width="7" height="9" rx="1"></rect><rect x="3" y="16" width="7" height="5" rx="1"></rect></svg>
+          Dashboard Ringkasan
+        </button>
+
+        <button class="nav-item" data-view="accounts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+          Multi-Account & Transfer
+          <span class="badge" id="sidebarAccountCount">5</span>
+        </button>
+
+        <button class="nav-item" data-view="transactions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          Buku Transaksi
+        </button>
+
+        <button class="nav-item" data-view="budgets">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          Anggaran & Smart Alerts
+          <span class="badge" id="sidebarBudgetAlert" style="background:#ef4444; color:#fff; display:none;">!</span>
+        </button>
+
+        <button class="nav-item" data-view="networth">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          Net Worth Tracker
+        </button>
+
+        <button class="nav-item" data-view="recurring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          Transaksi Berulang
+        </button>
+
+        <button class="nav-item" data-view="insights">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          Analisis & Insights
+        </button>
+
+        <div class="nav-section-label">Laporan & Arsip</div>
+        <button class="nav-item" data-view="reports">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Laporan & Export
+        </button>
+
+        <button class="nav-item" data-view="legacy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+          Spreadsheet Asli
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="quick-stats-pill">
+          <div class="label">Kekayaan Bersih</div>
+          <div class="value" id="sidebarNetWorthValue">Rp 0</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      <!-- Top Sticky Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="page-title">
+            <h1 id="headerViewTitle">Dashboard Ringkasan</h1>
+            <p id="headerViewSubtitle">Gambaran umum arus kas dan metrik kesehatan finansial Anda</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-primary" id="btnQuickAddTx">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Catat Transaksi
+          </button>
+
+          <button class="btn btn-secondary" id="btnQuickTransfer">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+            Transfer
+          </button>
+
+          <button class="btn-icon" id="btnThemeToggle" title="Toggle Dark/Light Mode">
+            <svg id="themeIconSun" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW 1: DASHBOARD RINGKASAN -->
+      <section class="view-content active" id="view-dashboard">
+        <!-- 6 Metrics Overview Cards -->
+        <div class="metrics-grid">
+          <div class="metric-card primary">
+            <div class="metric-header">
+              <span class="metric-title">Total Saldo Likuid</span>
+              <div class="metric-icon-box">💰</div>
+            </div>
+            <div class="metric-value" id="cardLiquidBalance">Rp 0</div>
+            <div class="metric-footer">
+              <span class="trend-badge up">Aktif</span>
+              <span>Di 5 rekening & e-wallet</span>
+            </div>
+          </div>
+
+          <div class="metric-card success">
+            <div class="metric-header">
+              <span class="metric-title">Pemasukan Bulan Ini</span>
+              <div class="metric-icon-box">📈</div>
+            </div>
+            <div class="metric-value" id="cardMonthIncome">Rp 0</div>
+            <div class="metric-footer">
+              <span class="trend-badge up">Masuk</span>
+              <span>Gaji, bonus, & dividen</span>
+            </div>
+          </div>
+
+          <div class="metric-card danger">
+            <div class="metric-header">
+              <span class="metric-title">Pengeluaran Bulan Ini</span>
+              <div class="metric-icon-box">📉</div>
+            </div>
+            <div class="metric-value" id="cardMonthExpense">Rp 0</div>
+            <div class="metric-footer">
+              <span class="trend-badge down">Keluar</span>
+              <span>Belanja, tagihan, & operasional</span>
+            </div>
+          </div>
+
+          <div class="metric-card blue">
+            <div class="metric-header">
+              <span class="metric-title">Arus Kas Bersih (Net Profit)</span>
+              <div class="metric-icon-box">⚖️</div>
+            </div>
+            <div class="metric-value" id="cardNetProfit">Rp 0</div>
+            <div class="metric-footer">
+              <span>Surplus bulan berjalan</span>
+            </div>
+          </div>
+
+          <div class="metric-card purple">
+            <div class="metric-header">
+              <span class="metric-title">Kekayaan Bersih (Net Worth)</span>
+              <div class="metric-icon-box">🏛️</div>
+            </div>
+            <div class="metric-value" id="cardNetWorth">Rp 0</div>
+            <div class="metric-footer">
+              <span>Aset Likuid + Fisik - Liabilitas</span>
+            </div>
+          </div>
+
+          <div class="metric-card primary">
+            <div class="metric-header">
+              <span class="metric-title">Prediksi Saldo Akhir Bulan</span>
+              <div class="metric-icon-box">🔮</div>
+            </div>
+            <div class="metric-value" id="cardProjectedEnd">Rp 0</div>
+            <div class="metric-footer">
+              <span>Estimasi run-rate matematis</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Tren Arus Kas (6 Bulan Terakhir)</h3>
+                <p class="card-subtitle">Perbandingan pemasukan vs pengeluaran riil</p>
+              </div>
+            </div>
+            <div class="card-body" style="height: 300px;">
+              <canvas id="cashFlowChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Proporsi Pengeluaran</h3>
+                <p class="card-subtitle">Berdasarkan kategori bulan ini</p>
+              </div>
+            </div>
+            <div class="card-body" style="height: 300px;">
+              <canvas id="categoryDonutChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Transactions & Smart Budget Alerts -->
+        <div class="grid-2">
+          <!-- Recent Transactions -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Transaksi Terkini</h3>
+                <p class="card-subtitle">Aktivitas keuangan terbaru Anda</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="switchView('transactions')">Lihat Semua</button>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="table" id="dashboardRecentTxTable">
+                  <thead>
+                    <tr>
+                      <th>Tanggal</th>
+                      <th>Kategori / Keterangan</th>
+                      <th>Akun</th>
+                      <th style="text-align: right;">Nominal</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Budget Alerts Box -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Peringatan Anggaran</h3>
+                <p class="card-subtitle">Status limit pengeluaran bulan ini</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="switchView('budgets')">Kelola</button>
+            </div>
+            <div class="card-body" id="dashboardBudgetAlertsList">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: MULTI-ACCOUNT & TRANSFER -->
+      <section class="view-content" id="view-accounts">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Daftar Akun & Rekening</h3>
+              <p class="card-subtitle">Kelola rekening bank, e-wallet, uang tunai, dan akun investasi</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-primary" id="btnModalAddAccount">+ Tambah Akun Baru</button>
+              <button class="btn btn-secondary" onclick="openTransferModal()">⇄ Transfer Antar-Akun</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="grid-cards" id="accountsCardsContainer">
+              <!-- Dynamically generated account cards -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: BUKU KAS & TRANSAKSI -->
+      <section class="view-content" id="view-transactions">
+        <div class="filter-bar">
+          <div class="search-input-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="txSearchInput" class="search-input" placeholder="Cari transaksi, deskripsi, atau kategori...">
+          </div>
+
+          <select id="txTypeFilter" class="form-select">
+            <option value="all">Semua Tipe</option>
+            <option value="income">Pemasukan (+)</option>
+            <option value="expense">Pengeluaran (-)</option>
+            <option value="transfer">Transfer Antar-Akun (⇄)</option>
+          </select>
+
+          <select id="txAccountFilter" class="form-select">
+            <option value="all">Semua Akun</option>
+          </select>
+
+          <select id="txSortFilter" class="form-select">
+            <option value="date_desc">Tanggal Terbaru</option>
+            <option value="date_asc">Tanggal Terlama</option>
+            <option value="amount_desc">Nominal Terbesar</option>
+            <option value="amount_asc">Nominal Terkecil</option>
+          </select>
+
+          <button class="btn btn-primary" id="btnFilterAddTx">+ Tambah</button>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Riwayat Transaksi Lengkap</h3>
+              <p class="card-subtitle" id="txCountSummary">Menampilkan seluruh data</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="window.FinanceExporterInstance.exportTransactionsToCSV()">
+              📥 Export CSV
+            </button>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="table" id="allTransactionsTable">
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>Tipe</th>
+                    <th>Kategori</th>
+                    <th>Deskripsi</th>
+                    <th>Akun Asal / Tujuan</th>
+                    <th style="text-align: right;">Nominal</th>
+                    <th style="text-align: center;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: ANGGARAN & SMART ALERTS -->
+      <section class="view-content" id="view-budgets">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Anggaran Bulanan & Peringatan Ambang Batas</h3>
+              <p class="card-subtitle">Pengawasan real-time dengan notifikasi otomatis pada batas 80% & 100%</p>
+            </div>
+            <button class="btn btn-primary" id="btnAddBudgetModalOpen">+ Buat Anggaran Kategori</button>
+          </div>
+          <div class="card-body">
+            <div class="grid-cards" id="budgetCardsContainer">
+              <!-- Dynamically populated budget cards -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 5: NET WORTH TRACKER -->
+      <section class="view-content" id="view-networth">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Kalkulator Kekayaan Bersih (Net Worth)</h3>
+              <p class="card-subtitle">Rumus Presisi: <strong>Total Aset (Likuid + Fisik) - Total Liabilitas (Utang/Cicilan)</strong></p>
+            </div>
+            <button class="btn btn-primary" id="btnAddAssetModalOpen">+ Tambah Aset / Utang</button>
+          </div>
+          <div class="card-body">
+            <!-- Net Worth Chart -->
+            <div style="height: 280px; margin-bottom: 2rem;">
+              <canvas id="netWorthEvolutionChart"></canvas>
+            </div>
+
+            <!-- Breakdown Grids -->
+            <div class="grid-2">
+              <!-- Non-liquid Assets -->
+              <div>
+                <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: #10b981;">
+                  🏢 Aset Fisik & Investasi Jangka Panjang
+                </h4>
+                <div class="table-responsive">
+                  <table class="table" id="tableAssets">
+                    <thead>
+                      <tr>
+                        <th>Nama Aset</th>
+                        <th>Kategori</th>
+                        <th style="text-align: right;">Nilai Estimasi</th>
+                        <th style="text-align: center;">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Liabilities -->
+              <div>
+                <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: #ef4444;">
+                  💳 Liabilitas & Beban Utang
+                </h4>
+                <div class="table-responsive">
+                  <table class="table" id="tableLiabilities">
+                    <thead>
+                      <tr>
+                        <th>Kewajiban / Cicilan</th>
+                        <th>Kategori</th>
+                        <th style="text-align: right;">Sisa Pokok</th>
+                        <th style="text-align: center;">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 6: TRANSAKSI BERULANG (RECURRING) -->
+      <section class="view-content" id="view-recurring">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Transaksi Berulang & Jadwal Pengingat</h3>
+              <p class="card-subtitle">Otomatisasi gaji, langganan bulanan, internet, dan tagihan berkala</p>
+            </div>
+            <button class="btn btn-primary" id="btnAddRecurringModalOpen">+ Tambah Jadwal Berulang</button>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table" id="tableRecurring">
+                <thead>
+                  <tr>
+                    <th>Nama Jadwal</th>
+                    <th>Tipe</th>
+                    <th>Frekuensi</th>
+                    <th>Tanggal Eksekusi</th>
+                    <th>Akun Terkait</th>
+                    <th style="text-align: right;">Nominal</th>
+                    <th>Status</th>
+                    <th style="text-align: center;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 7: ANALISIS & INSIGHTS -->
+      <section class="view-content" id="view-insights">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Financial Insights & Analisis Rasio</h3>
+              <p class="card-subtitle">Pemeriksaan analitik berbasis data riil transaksi Anda</p>
+            </div>
+          </div>
+          <div class="card-body" id="insightsContentContainer">
+            <!-- Dynamically generated recommendations & analysis cards -->
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 8: LAPORAN & EXPORT -->
+      <section class="view-content" id="view-reports">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Export Laporan Finansial</h3>
+                <p class="card-subtitle">Cetak dokumen PDF atau unduh dataset spreadsheet Excel/CSV</p>
+              </div>
+            </div>
+            <div class="card-body" style="display: flex; flex-direction: column; gap: 1rem;">
+              <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                Laporan ini merangkum seluruh arus kas, realisasi anggaran bulanan, rincian saldo rekening, dan posisi kekayaan bersih secara terperinci.
+              </p>
+              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="window.FinanceExporterInstance.generatePrintReport()">
+                  🖨️ Cetak / Simpan PDF
+                </button>
+                <button class="btn btn-secondary" onclick="window.FinanceExporterInstance.exportTransactionsToCSV()">
+                  📊 Unduh CSV (Excel-Ready)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Backup & Pemulihan Data</h3>
+                <p class="card-subtitle">Simpan seluruh database lokal atau pulihkan dari file cadangan</p>
+              </div>
+            </div>
+            <div class="card-body" style="display: flex; flex-direction: column; gap: 1rem;">
+              <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                Data tersimpan aman di browser Anda (LocalStorage). Anda dapat mengunduh file JSON backup kapan saja untuk dipindahkan ke perangkat lain.
+              </p>
+              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <button class="btn btn-secondary" onclick="window.FinanceExporterInstance.exportJSONBackup()">
+                  💾 Unduh JSON Backup
+                </button>
+                <label class="btn btn-outline-primary" style="margin: 0; cursor: pointer;">
+                  📂 Pulihkan Data Backup
+                  <input type="file" id="inputImportBackup" accept=".json" style="display: none;">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 9: SPREADSHEET ASLI (PRESERVED LEGACY SHEETS) -->
+      <section class="view-content" id="view-legacy">
+        <div class="card" style="margin-bottom: 0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Arsip Spreadsheet Google Sheets Asli</h3>
+              <p class="card-subtitle">Seluruh berkas HTML asli tetap dipertahankan 100% dan dapat diakses langsung</p>
+            </div>
+            <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;" id="legacySheetTabs">
+              <button class="btn btn-sm btn-primary" onclick="loadLegacySheet('Dashboard.html', this)">Dashboard</button>
+              <button class="btn btn-sm btn-secondary" onclick="loadLegacySheet('Pembukuan.html', this)">Pembukuan</button>
+              <button class="btn btn-sm btn-secondary" onclick="loadLegacySheet('Olah Data.html', this)">Olah Data</button>
+              <button class="btn btn-sm btn-secondary" onclick="loadLegacySheet('Laporan.html', this)">Laporan</button>
+              <button class="btn btn-sm btn-secondary" onclick="loadLegacySheet('Asset Tracker.html', this)">Asset Tracker</button>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <iframe id="legacySheetFrame" class="sheet-viewer-frame" src="Dashboard.html" title="Original Sheet"></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Bottom Navigation for Mobile Devices -->
+  <nav class="mobile-bottom-nav">
+    <button class="bottom-nav-item active" data-view="dashboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+      Dashboard
+    </button>
+    <button class="bottom-nav-item" data-view="transactions">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><line x1="16" y1="13" x2="8" y2="13"></line></svg>
+      Transaksi
+    </button>
+    <button class="bottom-nav-item" data-view="budgets">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      Anggaran
+    </button>
+    <button class="bottom-nav-item" data-view="networth">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline></svg>
+      Net Worth
+    </button>
+    <button class="bottom-nav-item" data-view="accounts">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+      Akun
+    </button>
+  </nav>
+
+  <!-- ========================================================
+       MODALS
+       ======================================================== -->
+
+  <!-- Modal 1: Catat Transaksi (Pemasukan, Pengeluaran, Transfer) -->
+  <div class="modal-overlay" id="modalTransaction">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTxTitle">Catat Transaksi</h3>
+        <button class="modal-close" onclick="closeModal('modalTransaction')">✕</button>
+      </div>
+      <form id="formTransaction">
+        <input type="hidden" id="txIdInput">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Tipe Transaksi</label>
+            <select id="txTypeSelect" class="form-select" required>
+              <option value="expense">Pengeluaran (-)</option>
+              <option value="income">Pemasukan (+)</option>
+              <option value="transfer">Transfer Antar-Akun (⇄)</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nominal (Rupiah)</label>
+              <input type="number" id="txAmountInput" class="form-input" placeholder="Contoh: 150000" min="1" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tanggal</label>
+              <input type="date" id="txDateInput" class="form-input" required>
+            </div>
+          </div>
+
+          <div class="form-group" id="groupTxCategory">
+            <label class="form-label">Kategori</label>
+            <select id="txCategorySelect" class="form-select">
+              <option value="Makanan & Minuman">Makanan & Minuman</option>
+              <option value="Transportasi & Bensin">Transportasi & Bensin</option>
+              <option value="Tagihan & Utilitas">Tagihan & Utilitas</option>
+              <option value="Belanja & Hiburan">Belanja & Hiburan</option>
+              <option value="Kesehatan & Asuransi">Kesehatan & Asuransi</option>
+              <option value="Gaji & Pendapatan">Gaji & Pendapatan</option>
+              <option value="Investasi & Bonus">Investasi & Bonus</option>
+              <option value="Lain-lain">Lain-lain</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" id="labelTxAccountFrom">Dari Akun</label>
+              <select id="txAccountFromSelect" class="form-select" required></select>
+            </div>
+            <div class="form-group" id="groupTxAccountTo" style="display: none;">
+              <label class="form-label">Ke Akun Tujuan</label>
+              <select id="txAccountToSelect" class="form-select"></select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Catatan / Deskripsi</label>
+            <input type="text" id="txDescInput" class="form-input" placeholder="Keterangan transaksi (opsional)">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modalTransaction')">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Transaksi</button>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <nav class="tabs-nav" id="tabsNav">
-      <button class="tab-btn active" data-src="Dashboard.html" onclick="loadSheet(this, 'Dashboard.html')">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
-        Dashboard
-      </button>
-
-      <button class="tab-btn" data-src="Pembukuan.html" onclick="loadSheet(this, 'Pembukuan.html')">
-        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-        Pembukuan
-      </button>
-
-      <button class="tab-btn" data-src="Olah Data.html" onclick="loadSheet(this, 'Olah Data.html')">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-        Olah Data
-      </button>
-
-      <button class="tab-btn" data-src="Laporan.html" onclick="loadSheet(this, 'Laporan.html')">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-        Laporan
-      </button>
-
-      <button class="tab-btn" data-src="Asset Tracker.html" onclick="loadSheet(this, 'Asset Tracker.html')">
-        <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-        Asset Tracker
-      </button>
-    </nav>
-
-    <div class="actions-section">
-      <button class="action-btn" title="Refresh Sheet" onclick="refreshCurrentSheet()">
-        <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
-      </button>
-      <a id="btnExternal" class="action-btn" title="Buka di Tab Baru" href="Dashboard.html" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-      </a>
-      <button class="action-btn" title="Layar Penuh" onclick="toggleFullscreen()">
-        <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-      </button>
+  <!-- Modal 2: Tambah Akun -->
+  <div class="modal-overlay" id="modalAccount">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Tambah Akun Keuangan</h3>
+        <button class="modal-close" onclick="closeModal('modalAccount')">✕</button>
+      </div>
+      <form id="formAccount">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Nama Akun / Bank</label>
+            <input type="text" id="accNameInput" class="form-input" placeholder="Contoh: BCA Tabungan, Dana, Dompet" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Tipe Akun</label>
+              <select id="accTypeSelect" class="form-select" required>
+                <option value="bank">Bank</option>
+                <option value="ewallet">E-Wallet</option>
+                <option value="cash">Kas Tunai</option>
+                <option value="investment">Investasi</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Saldo Awal (IDR)</label>
+              <input type="number" id="accBalanceInput" class="form-input" placeholder="0" min="0" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nomor Rekening / Keterangan</label>
+            <input type="text" id="accNumberInput" class="form-input" placeholder="Contoh: 123-456-7890">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modalAccount')">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Akun</button>
+        </div>
+      </form>
     </div>
-  </header>
+  </div>
 
-  <main id="content-container">
-    <div class="loader-overlay" id="loader">
-      <div class="spinner"></div>
+  <!-- Modal 3: Buat Anggaran Bulanan -->
+  <div class="modal-overlay" id="modalBudget">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Atur Anggaran Bulanan</h3>
+        <button class="modal-close" onclick="closeModal('modalBudget')">✕</button>
+      </div>
+      <form id="formBudget">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Kategori Pengeluaran</label>
+            <select id="budgetCategorySelect" class="form-select" required>
+              <option value="Makanan & Minuman">Makanan & Minuman</option>
+              <option value="Transportasi & Bensin">Transportasi & Bensin</option>
+              <option value="Tagihan & Utilitas">Tagihan & Utilitas</option>
+              <option value="Belanja & Hiburan">Belanja & Hiburan</option>
+              <option value="Kesehatan & Asuransi">Kesehatan & Asuransi</option>
+              <option value="Lain-lain">Lain-lain</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Batas Maksimal Anggaran (IDR)</label>
+            <input type="number" id="budgetLimitInput" class="form-input" placeholder="Contoh: 3000000" min="1000" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modalBudget')">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Anggaran</button>
+        </div>
+      </form>
     </div>
-    <iframe id="sheet-frame" src="Dashboard.html" title="Sheet Content"></iframe>
-  </main>
+  </div>
 
+  <!-- Modal 4: Tambah Aset / Liabilitas (Net Worth) -->
+  <div class="modal-overlay" id="modalAssetLiability">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Tambah Aset Fisik / Liabilitas</h3>
+        <button class="modal-close" onclick="closeModal('modalAssetLiability')">✕</button>
+      </div>
+      <form id="formAssetLiability">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Klasifikasi</label>
+            <select id="astClassificationSelect" class="form-select" required>
+              <option value="asset">Aset Fisik / Investasi (+)</option>
+              <option value="liability">Liabilitas / Beban Utang (-)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nama Barang / Deskripsi Utang</label>
+            <input type="text" id="astNameInput" class="form-input" placeholder="Contoh: Rumah Tinggal, Emas Batangan, KPR Mandiri" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Kategori</label>
+              <input type="text" id="astCategoryInput" class="form-input" placeholder="Contoh: Properti, Kendaraan, Pinjaman">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nilai / Saldo Pokok (IDR)</label>
+              <input type="number" id="astValueInput" class="form-input" placeholder="Contoh: 50000000" min="1" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Catatan Tambahan</label>
+            <input type="text" id="astNotesInput" class="form-input" placeholder="Keterangan tambahan (opsional)">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modalAssetLiability')">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 5: Tambah Transaksi Berulang -->
+  <div class="modal-overlay" id="modalRecurring">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Tambah Transaksi Berulang</h3>
+        <button class="modal-close" onclick="closeModal('modalRecurring')">✕</button>
+      </div>
+      <form id="formRecurring">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Nama Jadwal</label>
+            <input type="text" id="recNameInput" class="form-input" placeholder="Contoh: Gaji Kantor, Cicilan KPR, Netflix" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Tipe</label>
+              <select id="recTypeSelect" class="form-select" required>
+                <option value="expense">Pengeluaran (-)</option>
+                <option value="income">Pemasukan (+)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nominal (IDR)</label>
+              <input type="number" id="recAmountInput" class="form-input" placeholder="Contoh: 500000" min="1" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Frekuensi</label>
+              <select id="recFrequencySelect" class="form-select" required>
+                <option value="monthly">Bulanan</option>
+                <option value="weekly">Mingguan</option>
+                <option value="daily">Harian</option>
+                <option value="yearly">Tahunan</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tanggal Eksekusi (Tiap Tgl)</label>
+              <input type="number" id="recDayInput" class="form-input" min="1" max="31" value="1" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Akun Terkait</label>
+            <select id="recAccountSelect" class="form-select" required></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Kategori</label>
+            <input type="text" id="recCategoryInput" class="form-input" placeholder="Contoh: Tagihan & Utilitas">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modalRecurring')">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Jadwal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/export.js"></script>
+
+  <!-- Application Controller -->
   <script>
-    let currentSrc = "Dashboard.html";
-    const frame = document.getElementById("sheet-frame");
-    const loader = document.getElementById("loader");
-    const btnExternal = document.getElementById("btnExternal");
+    const app = window.FinanceAppInstance;
+    const charts = window.FinanceChartsInstance;
 
-    function loadSheet(btn, url) {
-      document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
-      btn.classList.add("active");
-      currentSrc = url;
-      btnExternal.href = url;
-      loader.classList.add("active");
-      frame.src = url;
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<span>${type === 'success' ? '✅' : (type === 'error' ? '❌' : (type === 'warning' ? '⚠️' : 'ℹ️'))}</span> <span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-10px)';
+        setTimeout(() => toast.remove(), 250);
+      }, 3500);
     }
 
-    frame.onload = function() {
-      loader.classList.remove("active");
-    };
-
-    function refreshCurrentSheet() {
-      loader.classList.add("active");
-      frame.contentWindow.location.reload();
+    // Modal Control
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('active');
     }
 
-    function toggleFullscreen() {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-          console.error(`Gagal fullscreen: ${err.message}`);
-        });
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('active');
+    }
+
+    // Close on Escape or click outside
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+      }
+    });
+
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+      });
+    });
+
+    // Theme Toggle
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      app.settings.theme = next;
+      app.saveAll();
+      charts.updateAll(app);
+    }
+    document.getElementById('btnThemeToggle').addEventListener('click', toggleTheme);
+
+    // Navigation Switcher
+    function switchView(viewName) {
+      document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(btn => {
+        if (btn.getAttribute('data-view') === viewName) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      document.querySelectorAll('.view-content').forEach(v => v.classList.remove('active'));
+      const activeView = document.getElementById(`view-${viewName}`);
+      if (activeView) activeView.classList.add('active');
+
+      // Update titles
+      const titles = {
+        dashboard: ['Dashboard Ringkasan', 'Gambaran umum arus kas dan metrik kesehatan finansial Anda'],
+        accounts: ['Multi-Account & Transfer', 'Kelola rekening bank, e-wallet, kas tunai, dan transfer saldo'],
+        transactions: ['Buku Transaksi', 'Pencatatan riwayat pemasukan, pengeluaran, dan transfer'],
+        budgets: ['Anggaran & Smart Alerts', 'Pengawasan batas pengeluaran dengan notifikasi 80% & 100%'],
+        networth: ['Net Worth Tracker', 'Perhitungan akurat Total Aset dikurangi Total Liabilitas'],
+        recurring: ['Transaksi Berulang', 'Jadwal rutin tagihan, langganan, dan pemasukan otomatis'],
+        insights: ['Analisis & Financial Insights', 'Evaluasi pola pengeluaran berbasis data transaksi nyata'],
+        reports: ['Laporan & Export', 'Cetak laporan resmi, unduh dataset CSV, serta cadangkan data'],
+        legacy: ['Spreadsheet Asli', 'Akses penuh ke lembar Google Sheets asli versi HTML']
+      };
+
+      if (titles[viewName]) {
+        document.getElementById('headerViewTitle').innerText = titles[viewName][0];
+        document.getElementById('headerViewSubtitle').innerText = titles[viewName][1];
+      }
+
+      // Close mobile sidebar if open
+      document.getElementById('appSidebar').classList.remove('open');
+
+      // Render charts if viewing charts
+      if (viewName === 'dashboard' || viewName === 'networth') {
+        setTimeout(() => charts.updateAll(app), 50);
+      }
+    }
+
+    document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const view = btn.getAttribute('data-view');
+        if (view) switchView(view);
+      });
+    });
+
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+      document.getElementById('appSidebar').classList.toggle('open');
+    });
+
+    // Populate Account Select dropdowns
+    function populateAccountDropdowns() {
+      const fromSel = document.getElementById('txAccountFromSelect');
+      const toSel = document.getElementById('txAccountToSelect');
+      const filterSel = document.getElementById('txAccountFilter');
+      const recSel = document.getElementById('recAccountSelect');
+
+      const optionsHtml = app.accounts.map(a => `<option value="${a.id}">${a.icon} ${a.name} (${app.formatIDR(a.balance)})</option>`).join('');
+
+      if (fromSel) fromSel.innerHTML = optionsHtml;
+      if (toSel) toSel.innerHTML = optionsHtml;
+      if (recSel) recSel.innerHTML = optionsHtml;
+      if (filterSel) {
+        filterSel.innerHTML = '<option value="all">Semua Akun</option>' + app.accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+      }
+
+      document.getElementById('sidebarAccountCount').innerText = app.accounts.length;
+    }
+
+    // Render Dashboard Overview
+    function renderDashboard() {
+      const summary = app.getSummary();
+
+      document.getElementById('cardLiquidBalance').innerText = app.formatIDR(summary.totalLiquidBalance);
+      document.getElementById('cardMonthIncome').innerText = app.formatIDR(summary.monthIncome);
+      document.getElementById('cardMonthExpense').innerText = app.formatIDR(summary.monthExpense);
+      document.getElementById('cardNetProfit').innerText = app.formatIDR(summary.netProfit);
+      document.getElementById('cardNetWorth').innerText = app.formatIDR(summary.netWorth);
+      document.getElementById('cardProjectedEnd').innerText = app.formatIDR(summary.projectedEndOfMonth);
+      document.getElementById('sidebarNetWorthValue').innerText = app.formatIDR(summary.netWorth);
+
+      // Render recent 5 transactions
+      const tbody = document.querySelector('#dashboardRecentTxTable tbody');
+      if (tbody) {
+        const recent = app.transactions.slice(0, 5);
+        if (recent.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 2rem;">Belum ada transaksi.</td></tr>';
+        } else {
+          tbody.innerHTML = recent.map(tx => {
+            const acc = app.accounts.find(a => a.id === tx.accountId);
+            const isInc = tx.type === 'income';
+            const isTrf = tx.type === 'transfer';
+            const colorClass = isInc ? 'badge-income' : (isTrf ? 'badge-transfer' : 'badge-expense');
+            const sign = isInc ? '+' : (isTrf ? '⇄' : '-');
+
+            return `
+              <tr>
+                <td>${tx.date}</td>
+                <td>
+                  <strong>${tx.category || '-'}</strong>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">${tx.description || ''}</div>
+                </td>
+                <td><span class="badge ${colorClass}">${acc ? acc.name : '-'}</span></td>
+                <td style="text-align:right; font-weight:700; color:${isInc ? '#10b981' : (isTrf ? '#3b82f6' : '#ef4444')};">
+                  ${sign} ${app.formatIDR(tx.amount)}
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+      }
+
+      // Render Active Budget Alerts in Dashboard
+      const alertContainer = document.getElementById('dashboardBudgetAlertsList');
+      const budgetStatuses = app.getBudgetStatus();
+      const alerts = budgetStatuses.filter(b => b.status === 'danger' || b.status === 'warning' || b.isProjectedOverbudget);
+
+      const sidebarAlertBadge = document.getElementById('sidebarBudgetAlert');
+      if (alerts.length > 0) {
+        sidebarAlertBadge.style.display = 'inline-block';
+        alertContainer.innerHTML = alerts.map(b => `
+          <div style="background:var(--bg-primary); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:0.85rem; margin-bottom:0.75rem;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+              <strong style="font-size:0.85rem;">${b.category}</strong>
+              <span class="badge ${b.status === 'danger' ? 'badge-expense' : 'badge-transfer'}">${b.percentage}% Digunakan</span>
+            </div>
+            <div class="progress-container" style="margin-bottom:0.4rem;">
+              <div class="progress-bar ${b.status}" style="width: ${Math.min(b.percentage, 100)}%;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted);">
+              <span>Terpakai: ${app.formatIDR(b.spent)}</span>
+              <span>Batas: ${app.formatIDR(b.limit)}</span>
+            </div>
+            ${b.isProjectedOverbudget ? `<div style="font-size:0.72rem; color:#ef4444; margin-top:0.3rem;">⚠️ Diproyeksikan mencapai ${app.formatIDR(b.projectedTotal)} akhir bulan ini.</div>` : ''}
+          </div>
+        `).join('');
       } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
+        sidebarAlertBadge.style.display = 'none';
+        alertContainer.innerHTML = '<div class="empty-state" style="padding:1.5rem;"><p>Seluruh anggaran terkendali dengan baik di bawah ambang batas 80%.</p></div>';
+      }
+    }
+
+    // Render Accounts Cards
+    function renderAccounts() {
+      const container = document.getElementById('accountsCardsContainer');
+      if (!container) return;
+
+      container.innerHTML = app.accounts.map(acc => `
+        <div class="account-card" style="border-top: 4px solid ${acc.color};">
+          <div class="account-card-header">
+            <div>
+              <div style="font-size: 1.25rem;">${acc.icon}</div>
+              <h4 style="font-size: 1.05rem; font-weight: 700; margin-top: 0.25rem;">${acc.name}</h4>
+              <span class="badge badge-${acc.type}">${acc.type.toUpperCase()}</span>
+            </div>
+            <button class="btn-icon" title="Hapus Akun" onclick="deleteAccount('${acc.id}')" style="width:30px; height:30px;">✕</button>
+          </div>
+          <div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Saldo Terkini</div>
+            <div style="font-size: 1.35rem; font-weight: 800; color: var(--text-main);">${app.formatIDR(acc.balance)}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">No: ${acc.number}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function deleteAccount(id) {
+      if (confirm('Yakin ingin menghapus akun ini?')) {
+        try {
+          app.deleteAccount(id);
+          showToast('Akun berhasil dihapus.', 'success');
+          refreshUI();
+        } catch (e) {
+          showToast(e.message, 'error');
         }
       }
     }
 
-    // Handle back/forward state via hash if any
-    window.addEventListener("DOMContentLoaded", () => {
-      const hash = window.location.hash.replace("#", "");
-      if (hash) {
-        const targetBtn = document.querySelector(`.tab-btn[data-src="${decodeURIComponent(hash)}"]`);
-        if (targetBtn) {
-          targetBtn.click();
+    // Render All Transactions Table
+    function renderTransactions() {
+      const tbody = document.querySelector('#allTransactionsTable tbody');
+      if (!tbody) return;
+
+      const q = (document.getElementById('txSearchInput')?.value || '').toLowerCase();
+      const typeF = document.getElementById('txTypeFilter')?.value || 'all';
+      const accF = document.getElementById('txAccountFilter')?.value || 'all';
+      const sortF = document.getElementById('txSortFilter')?.value || 'date_desc';
+
+      let filtered = app.transactions.filter(tx => {
+        if (typeF !== 'all' && tx.type !== typeF) return false;
+        if (accF !== 'all' && tx.accountId !== accF && tx.toAccountId !== accF) return false;
+        if (q) {
+          const cat = (tx.category || '').toLowerCase();
+          const desc = (tx.description || '').toLowerCase();
+          if (!cat.includes(q) && !desc.includes(q)) return false;
         }
+        return true;
+      });
+
+      // Sort
+      if (sortF === 'date_desc') filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+      else if (sortF === 'date_asc') filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+      else if (sortF === 'amount_desc') filtered.sort((a, b) => b.amount - a.amount);
+      else if (sortF === 'amount_asc') filtered.sort((a, b) => a.amount - b.amount);
+
+      document.getElementById('txCountSummary').innerText = `Menampilkan ${filtered.length} dari ${app.transactions.length} transaksi`;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Tidak ada transaksi yang cocok dengan filter.</td></tr>';
+        return;
       }
+
+      tbody.innerHTML = filtered.map(tx => {
+        const fromAcc = app.accounts.find(a => a.id === tx.accountId);
+        const toAcc = tx.toAccountId ? app.accounts.find(a => a.id === tx.toAccountId) : null;
+        const isInc = tx.type === 'income';
+        const isTrf = tx.type === 'transfer';
+        const badgeClass = isInc ? 'badge-income' : (isTrf ? 'badge-transfer' : 'badge-expense');
+        const sign = isInc ? '+' : (isTrf ? '⇄' : '-');
+        const color = isInc ? '#10b981' : (isTrf ? '#3b82f6' : '#ef4444');
+
+        return `
+          <tr>
+            <td>${tx.date}</td>
+            <td><span class="badge ${badgeClass}">${tx.type.toUpperCase()}</span></td>
+            <td><strong>${tx.category}</strong></td>
+            <td>${tx.description || '-'}</td>
+            <td>
+              ${fromAcc ? fromAcc.name : '-'}
+              ${toAcc ? ` ➔ <strong>${toAcc.name}</strong>` : ''}
+            </td>
+            <td style="text-align: right; font-weight: 700; color: ${color};">
+              ${sign} ${app.formatIDR(tx.amount)}
+            </td>
+            <td style="text-align: center;">
+              <button class="btn-icon" style="width:28px; height:28px;" title="Hapus" onclick="deleteTx('${tx.id}')">✕</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function deleteTx(id) {
+      if (confirm('Hapus transaksi ini? Saldo rekening terkait akan otomatis disesuaikan.')) {
+        app.deleteTransaction(id);
+        showToast('Transaksi berhasil dihapus.', 'success');
+        refreshUI();
+      }
+    }
+
+    // Render Budgets View
+    function renderBudgets() {
+      const container = document.getElementById('budgetCardsContainer');
+      if (!container) return;
+
+      const statuses = app.getBudgetStatus();
+      if (statuses.length === 0) {
+        container.innerHTML = '<div class="empty-state"><p>Belum ada anggaran bulanan yang ditentukan. Klik "+ Buat Anggaran Kategori" untuk mulai membatasi pengeluaran.</p></div>';
+        return;
+      }
+
+      container.innerHTML = statuses.map(b => `
+        <div class="budget-card">
+          <div class="budget-card-header">
+            <div>
+              <h4 style="font-size: 1.05rem; font-weight: 700;">${b.category}</h4>
+              <span class="badge ${b.status === 'danger' ? 'badge-expense' : (b.status === 'warning' ? 'badge-transfer' : 'badge-income')}">
+                ${b.status === 'danger' ? '🚨 Overbudget' : (b.status === 'warning' ? '⚠️ Waspada (≥80%)' : '✅ Aman')}
+              </span>
+            </div>
+            <button class="btn-icon" style="width:28px; height:28px;" onclick="deleteBudget('${b.id}')">✕</button>
+          </div>
+
+          <div class="progress-container" style="height: 10px;">
+            <div class="progress-bar ${b.status}" style="width: ${Math.min(b.percentage, 100)}%;"></div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+            <span>Terpakai: <strong>${app.formatIDR(b.spent)}</strong> (${b.percentage}%)</span>
+            <span>Batas: <strong>${app.formatIDR(b.limit)}</strong></span>
+          </div>
+
+          <div style="font-size:0.8rem; color:var(--text-muted); border-top:1px dashed var(--border-color); padding-top:0.5rem; display:flex; justify-content:space-between;">
+            <span>Sisa Anggaran:</span>
+            <strong style="color: ${b.remaining < 0 ? '#ef4444' : '#10b981'}">${app.formatIDR(b.remaining)}</strong>
+          </div>
+          ${b.isProjectedOverbudget ? `<div style="font-size:0.75rem; color:#ef4444; background:var(--accent-red-light); padding:0.35rem 0.5rem; border-radius:var(--radius-sm);">⚠️ Laju pengeluaran harian berpotensi melampaui batas (estimasi: ${app.formatIDR(b.projectedTotal)})</div>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function deleteBudget(id) {
+      if (confirm('Hapus anggaran kategori ini?')) {
+        app.deleteBudget(id);
+        showToast('Anggaran berhasil dihapus.', 'success');
+        refreshUI();
+      }
+    }
+
+    // Render Net Worth View
+    function renderNetWorth() {
+      const tableAssets = document.querySelector('#tableAssets tbody');
+      const tableLiab = document.querySelector('#tableLiabilities tbody');
+
+      const assets = app.assetsLiabilities.filter(a => a.type === 'asset');
+      const liabilities = app.assetsLiabilities.filter(a => a.type === 'liability');
+
+      if (tableAssets) {
+        tableAssets.innerHTML = assets.length === 0 
+          ? '<tr><td colspan="4" class="empty-state">Belum ada aset fisik dicatat.</td></tr>'
+          : assets.map(a => `
+            <tr>
+              <td><strong>${a.name}</strong><div style="font-size:0.75rem; color:var(--text-muted);">${a.notes || ''}</div></td>
+              <td>${a.category}</td>
+              <td style="text-align:right; font-weight:700; color:#10b981;">${app.formatIDR(a.value)}</td>
+              <td style="text-align:center;"><button class="btn-icon" style="width:26px; height:26px;" onclick="deleteAssetLiability('${a.id}')">✕</button></td>
+            </tr>
+          `).join('');
+      }
+
+      if (tableLiab) {
+        tableLiab.innerHTML = liabilities.length === 0
+          ? '<tr><td colspan="4" class="empty-state">Tidak ada beban utang tercatat.</td></tr>'
+          : liabilities.map(l => `
+            <tr>
+              <td><strong>${l.name}</strong><div style="font-size:0.75rem; color:var(--text-muted);">${l.notes || ''}</div></td>
+              <td>${l.category}</td>
+              <td style="text-align:right; font-weight:700; color:#ef4444;">${app.formatIDR(l.value)}</td>
+              <td style="text-align:center;"><button class="btn-icon" style="width:26px; height:26px;" onclick="deleteAssetLiability('${l.id}')">✕</button></td>
+            </tr>
+          `).join('');
+      }
+    }
+
+    function deleteAssetLiability(id) {
+      if (confirm('Hapus item ini?')) {
+        app.deleteAssetLiability(id);
+        showToast('Item berhasil dihapus.', 'success');
+        refreshUI();
+      }
+    }
+
+    // Render Recurring View
+    function renderRecurring() {
+      const tbody = document.querySelector('#tableRecurring tbody');
+      if (!tbody) return;
+
+      if (app.recurring.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty-state">Belum ada jadwal transaksi berulang.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = app.recurring.map(r => {
+        const acc = app.accounts.find(a => a.id === r.accountId);
+        return `
+          <tr>
+            <td><strong>${r.name}</strong></td>
+            <td><span class="badge ${r.type === 'income' ? 'badge-income' : 'badge-expense'}">${r.type.toUpperCase()}</span></td>
+            <td>${r.frequency}</td>
+            <td>Tiap tanggal ${r.dayOfMonth}</td>
+            <td>${acc ? acc.name : '-'}</td>
+            <td style="text-align:right; font-weight:700;">${app.formatIDR(r.amount)}</td>
+            <td>
+              <span class="badge ${r.active ? 'badge-income' : 'badge-expense'}">${r.active ? 'Aktif' : 'Nonaktif'}</span>
+            </td>
+            <td style="text-align:center; display:flex; gap:0.35rem; justify-content:center;">
+              <button class="btn btn-sm btn-primary" title="Proses Sekarang ke Transaksi" onclick="processRecurringNow('${r.id}')">⚡ Catat</button>
+              <button class="btn-icon" style="width:28px; height:28px;" title="Hapus" onclick="deleteRecurring('${r.id}')">✕</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function processRecurringNow(id) {
+      try {
+        const today = new Date().toISOString().slice(0, 10);
+        app.processRecurringItem(id, today);
+        showToast('Transaksi berulang berhasil dicatat ke buku kas!', 'success');
+        refreshUI();
+      } catch (e) {
+        showToast(e.message, 'warning');
+      }
+    }
+
+    function deleteRecurring(id) {
+      if (confirm('Hapus jadwal transaksi berulang ini?')) {
+        app.deleteRecurring(id);
+        showToast('Jadwal berhasil dihapus.', 'success');
+        refreshUI();
+      }
+    }
+
+    // Render Insights View
+    function renderInsights() {
+      const container = document.getElementById('insightsContentContainer');
+      if (!container) return;
+
+      const insights = app.generateInsights();
+      if (!insights.hasData) {
+        container.innerHTML = `<div class="empty-state"><p>${insights.message}</p></div>`;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="metrics-grid" style="margin-bottom: 1.5rem;">
+          <div class="metric-card primary">
+            <span class="metric-title">Kategori Pengeluaran Terbesar</span>
+            <div class="metric-value" style="font-size:1.25rem;">${insights.topCategory || '-'}</div>
+            <div class="metric-footer">
+              <span>${app.formatIDR(insights.topCategoryAmount)} (${insights.topCategoryPercent}%)</span>
+            </div>
+          </div>
+
+          <div class="metric-card blue">
+            <span class="metric-title">Perubahan MoM (Bulan Lalu)</span>
+            <div class="metric-value" style="font-size:1.25rem;">${insights.momChangeType === 'increase' ? '▲ +' : '▼ -'}${insights.momChangePercent}%</div>
+            <div class="metric-footer">
+              <span>Dibanding pengeluaran bulan lalu</span>
+            </div>
+          </div>
+
+          <div class="metric-card success">
+            <span class="metric-title">Tingkat Tabungan (Saving Rate)</span>
+            <div class="metric-value" style="font-size:1.25rem;">${insights.savingsRate}%</div>
+            <div class="metric-footer">
+              <span>Rasio pendapatan yang tersimpan</span>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:1.05rem; font-weight:700; margin-bottom:1rem;">Rekomendasi Strategis & Evaluasi Finansial</h4>
+        <div style="display:flex; flex-direction:column; gap:0.85rem;">
+          ${insights.recommendations.map(r => `
+            <div style="background:var(--bg-primary); border-left:4px solid ${r.type === 'positive' ? '#10b981' : (r.type === 'danger' ? '#ef4444' : '#f59e0b')}; border-radius:var(--radius-md); padding:1rem;">
+              <h5 style="font-size:0.95rem; font-weight:700; color:var(--text-main); margin-bottom:0.25rem;">${r.title}</h5>
+              <p style="font-size:0.85rem; color:var(--text-secondary); margin:0;">${r.detail}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // Refresh entire UI
+    function refreshUI() {
+      populateAccountDropdowns();
+      renderDashboard();
+      renderAccounts();
+      renderTransactions();
+      renderBudgets();
+      renderNetWorth();
+      renderRecurring();
+      renderInsights();
+      charts.updateAll(app);
+    }
+
+    // Form Event Handlers
+    document.getElementById('btnQuickAddTx').addEventListener('click', () => {
+      document.getElementById('formTransaction').reset();
+      document.getElementById('txIdInput').value = '';
+      document.getElementById('txDateInput').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('txTypeSelect').value = 'expense';
+      document.getElementById('groupTxAccountTo').style.display = 'none';
+      document.getElementById('groupTxCategory').style.display = 'block';
+      openModal('modalTransaction');
+    });
+
+    document.getElementById('btnFilterAddTx')?.addEventListener('click', () => {
+      document.getElementById('btnQuickAddTx').click();
+    });
+
+    document.getElementById('btnQuickTransfer').addEventListener('click', () => {
+      openTransferModal();
+    });
+
+    function openTransferModal() {
+      document.getElementById('formTransaction').reset();
+      document.getElementById('txIdInput').value = '';
+      document.getElementById('txDateInput').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('txTypeSelect').value = 'transfer';
+      document.getElementById('groupTxAccountTo').style.display = 'block';
+      document.getElementById('groupTxCategory').style.display = 'none';
+      openModal('modalTransaction');
+    }
+
+    document.getElementById('txTypeSelect').addEventListener('change', (e) => {
+      const isTrf = e.target.value === 'transfer';
+      document.getElementById('groupTxAccountTo').style.display = isTrf ? 'block' : 'none';
+      document.getElementById('groupTxCategory').style.display = isTrf ? 'none' : 'block';
+    });
+
+    document.getElementById('formTransaction').addEventListener('submit', (e) => {
+      e.preventDefault();
+      try {
+        const type = document.getElementById('txTypeSelect').value;
+        const amount = document.getElementById('txAmountInput').value;
+        const date = document.getElementById('txDateInput').value;
+        const category = document.getElementById('txCategorySelect').value;
+        const accountId = document.getElementById('txAccountFromSelect').value;
+        const toAccountId = document.getElementById('txAccountToSelect').value;
+        const description = document.getElementById('txDescInput').value;
+
+        app.addTransaction({
+          type, amount, date, category, accountId, toAccountId, description
+        });
+
+        closeModal('modalTransaction');
+        showToast('Transaksi berhasil dicatat!', 'success');
+        refreshUI();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    });
+
+    // Account Form
+    document.getElementById('btnModalAddAccount').addEventListener('click', () => {
+      document.getElementById('formAccount').reset();
+      openModal('modalAccount');
+    });
+
+    document.getElementById('formAccount').addEventListener('submit', (e) => {
+      e.preventDefault();
+      try {
+        const name = document.getElementById('accNameInput').value;
+        const type = document.getElementById('accTypeSelect').value;
+        const balance = document.getElementById('accBalanceInput').value;
+        const number = document.getElementById('accNumberInput').value;
+
+        app.addAccount({ name, type, balance, number });
+        closeModal('modalAccount');
+        showToast('Akun baru berhasil ditambahkan!', 'success');
+        refreshUI();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    });
+
+    // Budget Form
+    document.getElementById('btnAddBudgetModalOpen').addEventListener('click', () => {
+      document.getElementById('formBudget').reset();
+      openModal('modalBudget');
+    });
+
+    document.getElementById('formBudget').addEventListener('submit', (e) => {
+      e.preventDefault();
+      try {
+        const category = document.getElementById('budgetCategorySelect').value;
+        const limit = document.getElementById('budgetLimitInput').value;
+        app.addBudget(category, limit);
+        closeModal('modalBudget');
+        showToast('Anggaran bulanan berhasil disimpan!', 'success');
+        refreshUI();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    });
+
+    // Asset/Liability Form
+    document.getElementById('btnAddAssetModalOpen').addEventListener('click', () => {
+      document.getElementById('formAssetLiability').reset();
+      openModal('modalAssetLiability');
+    });
+
+    document.getElementById('formAssetLiability').addEventListener('submit', (e) => {
+      e.preventDefault();
+      try {
+        const type = document.getElementById('astClassificationSelect').value;
+        const name = document.getElementById('astNameInput').value;
+        const category = document.getElementById('astCategoryInput').value;
+        const value = document.getElementById('astValueInput').value;
+        const notes = document.getElementById('astNotesInput').value;
+
+        app.addAssetLiability({ type, name, category, value, notes });
+        closeModal('modalAssetLiability');
+        showToast('Data kekayaan bersih berhasil diperbarui!', 'success');
+        refreshUI();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    });
+
+    // Recurring Form
+    document.getElementById('btnAddRecurringModalOpen').addEventListener('click', () => {
+      document.getElementById('formRecurring').reset();
+      openModal('modalRecurring');
+    });
+
+    document.getElementById('formRecurring').addEventListener('submit', (e) => {
+      e.preventDefault();
+      try {
+        const name = document.getElementById('recNameInput').value;
+        const type = document.getElementById('recTypeSelect').value;
+        const amount = document.getElementById('recAmountInput').value;
+        const frequency = document.getElementById('recFrequencySelect').value;
+        const dayOfMonth = document.getElementById('recDayInput').value;
+        const accountId = document.getElementById('recAccountSelect').value;
+        const category = document.getElementById('recCategoryInput').value;
+
+        app.addRecurring({ name, type, amount, frequency, dayOfMonth, accountId, category });
+        closeModal('modalRecurring');
+        showToast('Jadwal berulang berhasil ditambahkan!', 'success');
+        refreshUI();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    });
+
+    // Search and filter listeners
+    ['txSearchInput', 'txTypeFilter', 'txAccountFilter', 'txSortFilter'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', renderTransactions);
+      document.getElementById(id)?.addEventListener('change', renderTransactions);
+    });
+
+    // Import JSON listener
+    document.getElementById('inputImportBackup').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        const res = await window.FinanceExporterInstance.importJSONBackup(file);
+        showToast(`Berhasil memulihkan ${res.accountsCount} akun dan ${res.txCount} transaksi!`, 'success');
+        refreshUI();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    });
+
+    // Legacy sheet tab switcher
+    function loadLegacySheet(url, btn) {
+      document.querySelectorAll('#legacySheetTabs button').forEach(b => {
+        b.className = 'btn btn-sm btn-secondary';
+      });
+      btn.className = 'btn btn-sm btn-primary';
+      document.getElementById('legacySheetFrame').src = url;
+    }
+
+    // Initialize application on load
+    window.addEventListener('DOMContentLoaded', () => {
+      refreshUI();
     });
   </script>
 </body>
