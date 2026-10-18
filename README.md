@@ -2,8 +2,8 @@
 
 Sistem Finansial & Dashboard Keuangan Modern all-in-one yang mendukung deployment langsung ke **Streamlit Cloud** serta **GitHub Pages**.
 
+- 🚀 **Live Streamlit App:** [https://dasboard-keuangan-ku.streamlit.app/](https://dasboard-keuangan-ku.streamlit.app/)
 - 🌐 **Live Demo (GitHub Pages):** [https://jovanathallahdimitri007-create.github.io/dasboard-keuangan/](https://jovanathallahdimitri007-create.github.io/dasboard-keuangan/)
-- ☁️ **Streamlit Cloud Ready:** Berkas utama `app.py` dan `requirements.txt` siap dideploy langsung di [Streamlit Community Cloud](https://share.streamlit.io/).
 
 ---
 
